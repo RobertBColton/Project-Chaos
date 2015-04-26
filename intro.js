@@ -89,9 +89,9 @@ function draw() {
 	ctx.drawImage(bt1img, bt1x, bt1y);
 	ctx.drawImage(bt2img, bt2x, bt2y);
 	if (bt1hover) {
-		ctx.drawImage(buttonHover, bt1x + bt1img.width + 5 + Math.sin(btosc), bt1y);
+		ctx.drawImage(buttonHover, bt1x + bt1img.width + 10 + Math.sin(btosc) * 4, bt1y);
 	} else if (bt2hover) {
-		ctx.drawImage(buttonHover, bt2x + bt2img.width + 5 + Math.sin(btosc), bt2y);
+		ctx.drawImage(buttonHover, bt2x + bt2img.width + 10 + Math.sin(btosc) * 4, bt2y);
 	}
 	ctx.closePath();
 	
