@@ -28,7 +28,7 @@ function update() {
 	
 	if (y > 0) { y -= 0.7; }
 	else if (yosc <= Math.PI) { yosc += 0.03; }
-	else { yosc = -yosc; }
+	else { yosc = 0; }
 }
 
 function clear() {
@@ -57,7 +57,7 @@ function draw() {
 	ctx.drawImage(waterBackground, x + waterBackground.width, canvas.height - waterBackground.height);
 	//ctx.drawImage(waterBackground, x + waterBackground.width * 2, canvas.height - waterBackground.height);
 	
-	drawImageCentered(emeraldIsland, 0, y - Math.sin(yosc) * 10);
+	drawImageCentered(emeraldIsland, 0, y + Math.cos(yosc) * 10);
 	
 	if (alpha > 0) {
 		ctx.beginPath();
