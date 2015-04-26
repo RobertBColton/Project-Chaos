@@ -1,18 +1,20 @@
-var audioNormalGarden;
+var audioNormalGarden, audioSEGA;
 
-var cloudsBackground, emeraldIsland;
+var cloudsBackground, emeraldIsland, SEGALogo;
 
 function resources(callback) {
 	// draw the load progress at least once
 	draw();
 	
 	// load our actual resources
-	var loadedImages = 0, maxImages = 2;
+	var loadedImages = 0, maxImages = 3;
 	var loadedAudio = 0, maxAudio = 1;
 	
 	cloudsBackground = loadImage("backgrounds/clouds.png");
 	emeraldIsland = loadImage("backgrounds/emeraldisland.png");
-	audioNormalGarden = loadAudio("garden.mp3");
+	SEGALogo = loadImage("sprites/sega.png");
+	//audioNormalGarden = loadAudio("audio/garden.mp3");
+	audioSEGA = loadAudio("audio/sega.mp3");
 	
 	// check for whether we have completed loading all resources
 	function done() {
