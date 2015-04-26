@@ -37,7 +37,10 @@ function resources(callback) {
 	// update the progress bar
 	function loadImageComplete() {
 		loadedImages++;
-		window.requestAnimationFrame(draw);
+		
+		// we're already on the event loop so just draw one frame
+		//window.requestAnimationFrame(draw);
+		draw();
 		
 		if (done()) { callback(); }
 	}
@@ -45,15 +48,17 @@ function resources(callback) {
 	// audio loading helper
 	function loadAudio(src) {
 		var audio = new Audio();
-		audio.addEventListener("canplaythrough", function() { loadAudioComplete(audio); }, false);
+		audio.addEventListener("canplaythrough", loadAudioComplete, false);
 		audio.src = src;
 		return audio;
 	}
 
 	// update the progress bar
-	function loadAudioComplete(audio) {
+	function loadAudioComplete() {
 		loadedAudio++;
-		window.requestAnimationFrame(draw);
+		// we're already on the event loop so just draw one frame
+		//window.requestAnimationFrame(draw);
+		draw();
 		
 		if (done()) { callback(); }
 	}
