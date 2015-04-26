@@ -1,6 +1,3 @@
-var canvas; // A global variable for our Canvas
-var ctx; // A global variable for the Canvas2D context
-
 start();
 
 function clear() {

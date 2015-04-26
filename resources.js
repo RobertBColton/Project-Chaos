@@ -1,17 +1,21 @@
+var canvas; // A global variable for our Canvas
+var ctx; // A global variable for the Canvas2D context
+
 var audioNormalGarden, audioSEGA;
 
-var cloudsBackground, emeraldIsland, SEGALogo;
+var cloudsBackground, emeraldIsland, grassBackground, SEGALogo;
 
 function resources(callback) {
 	// draw the load progress at least once
 	draw();
 	
 	// load our actual resources
-	var loadedImages = 0, maxImages = 3;
+	var loadedImages = 0, maxImages = 4;
 	var loadedAudio = 0, maxAudio = 1;
 	
 	cloudsBackground = loadImage("backgrounds/clouds.png");
 	emeraldIsland = loadImage("backgrounds/emeraldisland.png");
+	grassBackground = loadImage("backgrounds/grass.png");
 	SEGALogo = loadImage("sprites/sega.png");
 	//audioNormalGarden = loadAudio("audio/garden.mp3");
 	audioSEGA = loadAudio("audio/sega.mp3");
@@ -55,8 +59,10 @@ function resources(callback) {
 
 	// clear the canvas for us
 	function clear() {
+		ctx.beginPath();
 		ctx.fillStyle = "black";
 		ctx.fillRect( 0, 0, canvas.width, canvas.height );
+		ctx.closePath();
 	}
 
 	// draw a generic progress bar
