@@ -3,17 +3,18 @@ var ctx; // A global variable for the Canvas2D context
 
 var audioNormalGarden, audioSEGA;
 
-var cloudsBackground, waterBackground, emeraldIsland, grassBackground, SEGALogo;
+var cloudsBackground, clouds2Background, waterBackground, emeraldIsland, grassBackground, SEGALogo;
 
 function resources(callback) {
 	// draw the load progress at least once
 	draw();
 	
 	// load our actual resources
-	var loadedImages = 0, maxImages = 5;
+	var loadedImages = 0, maxImages = 6;
 	var loadedAudio = 0, maxAudio = 1;
 	
-	cloudsBackground = loadImage("backgrounds/clouds2.png");
+	cloudsBackground = loadImage("backgrounds/clouds.png");
+	clouds2Background = loadImage("backgrounds/clouds2.png");
 	waterBackground = loadImage("backgrounds/island.png");
 	emeraldIsland = loadImage("backgrounds/emeraldisland.png");
 	grassBackground = loadImage("backgrounds/grass.png");

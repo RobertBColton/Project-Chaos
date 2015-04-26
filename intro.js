@@ -6,8 +6,8 @@ audioSEGA.play();
 // kick off the initial frame
 draw();
 
-// x is for controlling our scrolling water, cx is for scrolling clouds at different speed
-var x = 0, cx = 0;
+// x is for controlling our scrolling water, cx is for scrolling clouds at different speeds, and the same for cx2 for the second cloud layer
+var x = 0, cx = 0, cx2 = 0;
 // y is for floating emerald island up from the bottom, yosc is for oscillating emerald island once it reaches it's destination 
 var y = canvas.height / 2, yosc = 0;
 // whether we want to transition to the garden and should stop requesting animation frames
@@ -16,14 +16,20 @@ var exiting = false;
 canvas.addEventListener("click", function() { exiting = true; }, false);
 
 function update() {
-	x -= 0.2;
-	if (x < -waterBackground.width) {
-		x = 0;
+	// each layer should get faster as it gets closer because field of view
+	cx2 -= 0.16;
+	if (cx2 < -cloudsBackground.width) {
+		cx2 = 0;
 	}
 	
-	cx -= 0.5;
+	cx -= 0.22;
 	if (cx < -cloudsBackground.width) {
 		cx = 0;
+	}
+	
+	x -= 0.34;
+	if (x < -waterBackground.width) {
+		x = 0;
 	}
 	
 	if (y > 0) { y -= 0.7; }
@@ -49,13 +55,16 @@ function draw() {
 	update();
 	
 	clear();
-	ctx.drawImage(cloudsBackground, cx, canvas.height - cloudsBackground.height - 30);
-	ctx.drawImage(cloudsBackground, cx + cloudsBackground.width, canvas.height - cloudsBackground.height - 30);
-	//ctx.drawImage(cloudsBackground, cx + cloudsBackground.width * 2, canvas.height - cloudsBackground.height - 20);
+	
+	//TODO: Fix half pixel alignment...
+	ctx.drawImage(cloudsBackground, cx2, canvas.height - cloudsBackground.height - 60);
+	ctx.drawImage(cloudsBackground, cx2 - 1 + cloudsBackground.width, canvas.height - cloudsBackground.height - 60);
+	
+	ctx.drawImage(clouds2Background, cx, canvas.height - clouds2Background.height - 30);
+	ctx.drawImage(clouds2Background, cx - 1 + clouds2Background.width, canvas.height - clouds2Background.height - 30);
 
 	ctx.drawImage(waterBackground, x, canvas.height - waterBackground.height);
-	ctx.drawImage(waterBackground, x + waterBackground.width, canvas.height - waterBackground.height);
-	//ctx.drawImage(waterBackground, x + waterBackground.width * 2, canvas.height - waterBackground.height);
+	ctx.drawImage(waterBackground, x - 1 + waterBackground.width, canvas.height - waterBackground.height);
 	
 	drawImageCentered(emeraldIsland, 0, y - Math.sin(yosc) * 10);
 	
