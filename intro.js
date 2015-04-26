@@ -8,7 +8,7 @@ test();
 // kick off the initial frame
 draw();
 
-var x = 0;
+var x = 0, y = canvas.height / 2;
 
 function update() {
 	x--;
@@ -24,11 +24,11 @@ function clear() {
 	ctx.closePath();
 }
 
-function drawImageCentered(img) {
-	ctx.drawImage(img, canvas.width / 2 - img.width / 2, canvas.height / 2 - img.height / 2);
+function drawImageCentered(img, xoff = 0, yoff = 0) {
+	ctx.drawImage(img, canvas.width / 2 - img.width / 2 + xoff, canvas.height / 2 - img.height / 2 + yoff);
 }
 
-var alpha = 1.0;
+var alpha = 1.0, timer = 100;
 
 function draw() {
 	update();
@@ -38,7 +38,8 @@ function draw() {
 	ctx.drawImage(cloudsBackground, x + cloudsBackground.width, canvas.height - cloudsBackground.height);
 	ctx.drawImage(cloudsBackground, x + cloudsBackground.width * 2, canvas.height - cloudsBackground.height);
 	
-	drawImageCentered(emeraldIsland);
+	drawImageCentered(emeraldIsland, 0, y);
+	if (y > 0) { y -= 0.7; }
 	
 	if (alpha > 0) {
 		ctx.beginPath();
@@ -46,7 +47,11 @@ function draw() {
 		ctx.fillRect( 0, 0, canvas.width, canvas.height );
 		ctx.closePath();
 		drawImageCentered(SEGALogo);
-		alpha -= 0.01;
+		if (timer > 0) { 
+			timer -= 1;
+		} else {
+			alpha -= 0.01;
+		}
 	}
 	
 	window.requestAnimationFrame(draw);
