@@ -1,6 +1,7 @@
 function intro() {
 
-audioNormalGarden.addEventListener("canplaythrough", function() { audioNormalGarden.play(); }, false);
+//audioNormalGarden.addEventListener("canplaythrough", function() { audioNormalGarden.play(); }, false);
+audioNormalGarden.play();
 
 test();
 
