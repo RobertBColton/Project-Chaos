@@ -14,12 +14,12 @@ var exiting = false;
 canvas.addEventListener("click", function() { exiting = true; }, false);
 
 function update() {
-	x -= 0.5;
+	x -= 0.2;
 	if (x < -waterBackground.width) {
 		x = 0;
 	}
 	
-	cx--;
+	cx -= 0.5;
 	if (cx < -cloudsBackground.width) {
 		cx = 0;
 	}
@@ -38,14 +38,15 @@ function drawImageCentered(img, xoff = 0, yoff = 0) {
 	ctx.drawImage(img, canvas.width / 2 - img.width / 2 + xoff, canvas.height / 2 - img.height / 2 + yoff);
 }
 
-var alpha = 1.0, timer = 100;
+// first alpha is for the black overlay, second alpha is for the sega logo, and the timer controls how long after the sega logo appears that the black overlay starts to fade
+var alpha = 1.0, alpha2 = 1.0, timer = 100;
 
 function draw() {
 	update();
-
+	
 	clear();
-	ctx.drawImage(cloudsBackground, cx, canvas.height - cloudsBackground.height - 20);
-	ctx.drawImage(cloudsBackground, cx + cloudsBackground.width, canvas.height - cloudsBackground.height - 20);
+	ctx.drawImage(cloudsBackground, cx, canvas.height - cloudsBackground.height - 30);
+	ctx.drawImage(cloudsBackground, cx + cloudsBackground.width, canvas.height - cloudsBackground.height - 30);
 	//ctx.drawImage(cloudsBackground, cx + cloudsBackground.width * 2, canvas.height - cloudsBackground.height - 20);
 
 	ctx.drawImage(waterBackground, x, canvas.height - waterBackground.height);
@@ -59,12 +60,19 @@ function draw() {
 		ctx.fillStyle = "rgba(0, 0, 0, " + alpha + ")";
 		ctx.fillRect( 0, 0, canvas.width, canvas.height );
 		ctx.closePath();
-		drawImageCentered(SEGALogo);
+		
 		if (timer > 0) { 
 			timer -= 1;
 		} else {
 			alpha -= 0.01;
 		}
+	} else {
+		alpha2 -= 0.02;
+	}
+	if (alpha2 > 0) {
+		ctx.globalAlpha = alpha2;
+		drawImageCentered(SEGALogo);
+		ctx.globalAlpha = 1.0;
 	}
 	
 	if (!exiting) {
