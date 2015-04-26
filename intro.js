@@ -6,8 +6,10 @@ audioSEGA.play();
 // kick off the initial frame
 draw();
 
-// x is for controlling our scrolling water, cx is for scrolling clouds at different speed, y is for floating emerald island up from the bottom
-var x = 0, cx = 0, y = canvas.height / 2;
+// x is for controlling our scrolling water, cx is for scrolling clouds at different speed
+var x = 0, cx = 0;
+// y is for floating emerald island up from the bottom, yosc is for oscillating emerald island once it reaches it's destination 
+var y = canvas.height / 2, yosc = 0;
 // whether we want to transition to the garden and should stop requesting animation frames
 var exiting = false;
 
@@ -25,6 +27,8 @@ function update() {
 	}
 	
 	if (y > 0) { y -= 0.7; }
+	else if (yosc <= Math.PI) { yosc += 0.03; }
+	else { yosc = -yosc; }
 }
 
 function clear() {
@@ -53,7 +57,7 @@ function draw() {
 	ctx.drawImage(waterBackground, x + waterBackground.width, canvas.height - waterBackground.height);
 	//ctx.drawImage(waterBackground, x + waterBackground.width * 2, canvas.height - waterBackground.height);
 	
-	drawImageCentered(emeraldIsland, 0, y);
+	drawImageCentered(emeraldIsland, 0, y - Math.sin(yosc) * 10);
 	
 	if (alpha > 0) {
 		ctx.beginPath();
