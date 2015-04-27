@@ -49,11 +49,13 @@ function resources(callback) {
 		
 		if (done()) { callback(); }
 	}
-
+	
 	// audio loading helper
 	function loadAudio(src) {
 		var audio = new Audio();
-		audio.addEventListener("canplaythrough", loadAudioComplete, false);
+		// if we don't remove the event listener this will keep getting triggered at the end of each play through of the audio
+		var e = function() { loadAudioComplete(); audio.removeEventListener("canplaythrough", e, false); };
+		audio.addEventListener("canplaythrough", e, false);
 		audio.src = src;
 		return audio;
 	}

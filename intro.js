@@ -24,16 +24,13 @@ var exiting = false;
 // our mouse position object
 var mousePos = { x: 0, y: 0 };
 
-function getMousePos(evt) {
-	var rect = canvas.getBoundingClientRect();
-	return {
-	  x: evt.clientX - rect.left,
-	  y: evt.clientY - rect.top
-	};
-}
+canvas.onclick = function() { if (bt1hover || bt2hover) { exiting = true; } };
+canvas.onmousemove = function(evt) { mousePos = getMousePos(evt); };
 
-canvas.addEventListener("click", function() { if (bt1hover || bt2hover) { exiting = true; } }, false);
-canvas.addEventListener("mousemove", function(evt) { mousePos = getMousePos(evt); }, false);
+function cleanup() {
+	canvas.onclick = null;
+	canvas.onmousemove = null;
+}
 
 // kick off the initial frame
 draw();
@@ -62,8 +59,10 @@ function update() {
 	if (btosc <= Math.PI) { btosc += 0.1; }
 	else { btosc = -Math.PI; }
 	
-	bt1hover = (mousePos.x >= bt1x && mousePos.x <= bt1x + bt1img.width && mousePos.y >= bt1y && mousePos.y <= bt1y + bt1img.height);
-	bt2hover = (mousePos.x >= bt2x && mousePos.x <= bt2x + bt2img.width && mousePos.y >= bt2y && mousePos.y <= bt2y + bt2img.height);
+	if (yosc != 0) {
+		bt1hover = (mousePos.x >= bt1x && mousePos.x <= bt1x + bt1img.width && mousePos.y >= bt1y && mousePos.y <= bt1y + bt1img.height);
+		bt2hover = (mousePos.x >= bt2x && mousePos.x <= bt2x + bt2img.width && mousePos.y >= bt2y && mousePos.y <= bt2y + bt2img.height);
+	}
 }
 
 function clear() {
@@ -85,15 +84,17 @@ function draw() {
 	
 	clear();
 	
-	ctx.beginPath();
-	ctx.drawImage(bt1img, bt1x, bt1y);
-	ctx.drawImage(bt2img, bt2x, bt2y);
-	if (bt1hover) {
-		ctx.drawImage(buttonHover, bt1x + bt1img.width + 10 + Math.sin(btosc) * 4, bt1y);
-	} else if (bt2hover) {
-		ctx.drawImage(buttonHover, bt2x + bt2img.width + 10 + Math.sin(btosc) * 4, bt2y);
+	if (yosc != 0) {
+		ctx.beginPath();
+		ctx.drawImage(bt1img, bt1x, bt1y);
+		ctx.drawImage(bt2img, bt2x, bt2y);
+		if (bt1hover) {
+			ctx.drawImage(buttonHover, bt1x + bt1img.width + 10 + Math.sin(btosc) * 4, bt1y);
+		} else if (bt2hover) {
+			ctx.drawImage(buttonHover, bt2x + bt2img.width + 10 + Math.sin(btosc) * 4, bt2y);
+		}
+		ctx.closePath();
 	}
-	ctx.closePath();
 	
 	//TODO: Fix half pixel alignment...
 	ctx.drawImage(cloudsBackground, cloudsx2, canvas.height - cloudsBackground.height - 60);
@@ -130,6 +131,7 @@ function draw() {
 	if (!exiting) {
 		window.requestAnimationFrame(draw);
 	} else {
+		cleanup();
 		garden();
 	}
 }
