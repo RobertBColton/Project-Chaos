@@ -6,12 +6,46 @@ var audioNormalGarden, audioSEGA;
 var cloudsBackground, clouds2Background, waterBackground, emeraldIsland, grassBackground, SEGALogo;
 var newGarden, continueGarden, buttonHover;
 
+// image, name, appearance, cost, mood, belly, swim, fly, run, power, stamina
+var fruit_data = [
+	[null, "Orange", 30, 1, 2, 3, -2, -2, 3, 1],
+	[null, "Blue Squash", 30, 1, 2, 3, -2, -2, 3, 1],
+	[null, "Heart-Strawberry", 30, 1, 2, 3, -2, -2, 3, 1],
+	[null, "Green Apple", 30, 1, 2, 3, -2, -2, 3, 1],
+	[null, "Triangular Grape", 30, 1, 2, 3, -2, -2, 3, 1],
+	[null, "Pear / Mango", 30, 1, 2, 3, -2, -2, 3, 1],
+	[null, "Square Red Apple", 30, 1, 2, 3, -2, -2, 3, 1]
+];
+
+// image, name, cost
+var egg_data = [
+    [null, "Normal", 0],
+	[null, "Silver", 500],
+	[null, "Gold", 1000],
+	[null, "Ruby / Pink", 5000],
+	[null, "Sapphire / Blue", 7000],
+	[null, "Amethyst / Purple", 8000],
+	[null, "Emerald / Teal", 10000],
+	[null, "Garnet / Red", 12000],
+	[null, "Aquamarine / Cyan", 14000],
+	[null, "Peridot / Lime", 16000],
+	[null, "Topaz / Orange", 18000],
+    [null, "Onyx / Black", 20000]
+];
+
+// image, name, cost
+var toy_data = [
+	[null, "Trumpet", 1000],
+	[null, "Duck", 2000],
+	[null, "Television", 8000]
+];
+
 function resources(callback) {
 	// draw the load progress at least once
 	draw();
 	
 	// load our actual resources
-	var loadedImages = 0, maxImages = 9;
+	var loadedImages = 0, maxImages = 31;
 	var loadedAudio = 0, maxAudio = 1;
 	
 	cloudsBackground = loadImage("backgrounds/clouds.png");
@@ -25,6 +59,31 @@ function resources(callback) {
 	SEGALogo = loadImage("sprites/sega.png");
 	//audioNormalGarden = loadAudio("audio/garden.mp3");
 	audioSEGA = loadAudio("audio/sega.mp3");
+	
+	fruit_data[0][0] = loadImage("sprites/fruit/orange.png");
+	fruit_data[1][0] = loadImage("sprites/fruit/eggplant.png");
+	fruit_data[2][0] = loadImage("sprites/fruit/hero.png");
+	fruit_data[3][0] = loadImage("sprites/fruit/lemon.png");
+	fruit_data[4][0] = loadImage("sprites/fruit/triangle.png");
+	fruit_data[5][0] = loadImage("sprites/fruit/avocado.png");
+	fruit_data[6][0] = loadImage("sprites/fruit/apple.png");
+	
+	egg_data[0][0] = loadImage("sprites/eggs/normal.png");
+	egg_data[1][0] = loadImage("sprites/eggs/silver.png");
+	egg_data[2][0] = loadImage("sprites/eggs/gold.png");
+	egg_data[3][0] = loadImage("sprites/eggs/pink.png");
+	egg_data[4][0] = loadImage("sprites/eggs/blue.png");
+	egg_data[5][0] = loadImage("sprites/eggs/lavender.png");
+	egg_data[6][0] = loadImage("sprites/eggs/green.png");
+	egg_data[7][0] = loadImage("sprites/eggs/red.png");
+	egg_data[8][0] = loadImage("sprites/eggs/aqua.png");
+	egg_data[9][0] = loadImage("sprites/eggs/lime.png");
+	egg_data[10][0] = loadImage("sprites/eggs/orange.png");
+	egg_data[11][0] = loadImage("sprites/eggs/purple.png");
+	
+	toy_data[0][0] = loadImage("sprites/trumpet.png");
+	toy_data[1][0] = loadImage("sprites/duck.png");
+	toy_data[2][0] = loadImage("sprites/television.png");
 	
 	// check for whether we have completed loading all resources
 	function done() {
