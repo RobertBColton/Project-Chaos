@@ -43,7 +43,7 @@ function update() {
 	}
 	
 	cloudsx -= 0.22;
-	if (cloudsx < -cloudsBackground.width) {
+	if (cloudsx < -clouds2Background.width) {
 		cloudsx = 0;
 	}
 	
@@ -72,7 +72,9 @@ function clear() {
 	ctx.closePath();
 }
 
-function drawImageCentered(img, xoff = 0, yoff = 0) {
+function drawImageCentered(img, xoff, yoff) {
+	xoff = xoff | 0;
+	yoff = yoff | 0;
 	ctx.drawImage(img, canvas.width / 2 - img.width / 2 + xoff, canvas.height / 2 - img.height / 2 + yoff);
 }
 
