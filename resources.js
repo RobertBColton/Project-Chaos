@@ -9,17 +9,17 @@ var newGarden, continueGarden, buttonHover;
 // image, name, appearance, cost, mood, belly, swim, fly, run, power, stamina
 var fruit_data = [
 	[null, "Orange", 30, 1, 2, 3, -2, -2, 3, 1],
-	[null, "Blue Squash", 30, 1, 2, 3, -2, -2, 3, 1],
-	[null, "Heart-Strawberry", 30, 1, 2, 3, -2, -2, 3, 1],
-	[null, "Green Apple", 30, 1, 2, 3, -2, -2, 3, 1],
-	[null, "Triangular Grape", 30, 1, 2, 3, -2, -2, 3, 1],
-	[null, "Pear / Mango", 30, 1, 2, 3, -2, -2, 3, 1],
-	[null, "Square Red Apple", 30, 1, 2, 3, -2, -2, 3, 1]
+	[null, "Blue Squash", 60, 0, 1, 2, 5, -1, -1, 3],
+	[null, "Heart-Strawberry", 55, 2, 2, 4, -3, 4, -3, 2],
+	[null, "Green Apple", 50, -1, 1, 0, -1, 3, 4, 2],
+	[null, "Triangular Grape", 30, 1, 2, -2, 3, 3, -2, 1],
+	[null, "Pear / Mango", 55, 2, 2, -2, 4, -2, 4, 2],
+	[null, "Square Red Apple", 70, -3, 0, 3, 1, 3, 2, -5]
 ];
 
 // image, name, cost
 var egg_data = [
-    [null, "Normal", 0],
+	[null, "Normal", 0],
 	[null, "Silver", 500],
 	[null, "Gold", 1000],
 	[null, "Ruby / Pink", 5000],
@@ -30,7 +30,7 @@ var egg_data = [
 	[null, "Aquamarine / Cyan", 14000],
 	[null, "Peridot / Lime", 16000],
 	[null, "Topaz / Orange", 18000],
-    [null, "Onyx / Black", 20000]
+	[null, "Onyx / Black", 20000]
 ];
 
 // image, name, cost
