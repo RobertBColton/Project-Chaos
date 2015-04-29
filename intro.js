@@ -1,18 +1,27 @@
 function intro() {
 
+// start using our custom cursor
+canvas.style.cursor = "none";
+
 //audioNormalGarden.addEventListener("canplaythrough", function() { audioNormalGarden.play(); }, false);
 audioSEGA.play();
 
+var newButton = {
+	x: 20,
+	y: 20,
+	img: newGarden,
+	hover: false
+};
+
+var continueButton = {
+	x: 40,
+	y: 64,
+	img: continueGarden,
+	hover: false
+};
+
 // btosc is for controlling the oscillation of the button hover indicator
-var bt1x, bt1y, bt2x, bt2y, btosc = 0;
-var bt1img = newGarden, bt2img = continueGarden;
-var bt1hover = false, bt2hover = false;
-
-bt1x = 20;
-bt1y = 20;
-
-bt2x = 40;
-bt2y = 60;
+var btosc = 0;
 
 // x is for controlling our scrolling water, cx is for scrolling clouds at different speeds, and the same for cx2 for the second cloud layer
 var waterx = 0, cloudsx = 0, cloudsx2 = 0;
@@ -24,7 +33,7 @@ var exiting = false;
 // our mouse position object
 var mousePos = { x: 0, y: 0 };
 
-canvas.onclick = function() { if (bt1hover || bt2hover) { exiting = true; } };
+canvas.onclick = function() { if (newButton.hover || continueButton.hover) { exiting = true; } };
 canvas.onmousemove = function(evt) { mousePos = getMousePos(evt); };
 
 function cleanup() {
@@ -60,8 +69,8 @@ function update() {
 	else { btosc = -Math.PI; }
 	
 	if (yosc != 0) {
-		bt1hover = (mousePos.x >= bt1x && mousePos.x <= bt1x + bt1img.width && mousePos.y >= bt1y && mousePos.y <= bt1y + bt1img.height);
-		bt2hover = (mousePos.x >= bt2x && mousePos.x <= bt2x + bt2img.width && mousePos.y >= bt2y && mousePos.y <= bt2y + bt2img.height);
+		buttonBoundsCheck(newButton, mousePos);
+		buttonBoundsCheck(continueButton, mousePos);
 	}
 }
 
@@ -81,21 +90,21 @@ function drawImageCentered(img, xoff, yoff) {
 // first alpha is for the black overlay, second alpha is for the sega logo, and the timer controls how long after the sega logo appears that the black overlay starts to fade
 var alpha = 1.0, alpha2 = 1.0, timer = 100;
 
+function drawButton(button) {
+	ctx.drawImage(button.img, button.x, button.y);
+	if (button.hover) {
+		ctx.drawImage(buttonHover, button.x + button.img.width + 10 + Math.sin(btosc) * 4, button.y + button.img.height / 2 - buttonHover.height / 2);
+	}
+}
+
 function draw() {
 	update();
 	
 	clear();
 	
 	if (yosc != 0) {
-		ctx.beginPath();
-		ctx.drawImage(bt1img, bt1x, bt1y);
-		ctx.drawImage(bt2img, bt2x, bt2y);
-		if (bt1hover) {
-			ctx.drawImage(buttonHover, bt1x + bt1img.width + 10 + Math.sin(btosc) * 4, bt1y);
-		} else if (bt2hover) {
-			ctx.drawImage(buttonHover, bt2x + bt2img.width + 10 + Math.sin(btosc) * 4, bt2y);
-		}
-		ctx.closePath();
+		drawButton(newButton);
+		drawButton(continueButton);
 	}
 	
 	//TODO: Fix half pixel alignment...
@@ -129,6 +138,8 @@ function draw() {
 		drawImageCentered(SEGALogo);
 		ctx.globalAlpha = 1.0;
 	}
+	
+	ctx.drawImage(cursorSprite, mousePos.x, mousePos.y);
 	
 	if (!exiting) {
 		window.requestAnimationFrame(draw);

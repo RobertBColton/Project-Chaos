@@ -4,7 +4,9 @@ var ctx; // A global variable for the Canvas2D context
 var audioNormalGarden, audioSEGA;
 
 var cloudsBackground, clouds2Background, waterBackground, emeraldIsland, grassBackground, SEGALogo;
-var newGarden, continueGarden, buttonHover;
+var newGarden, continueGarden, saveGarden, buttonHover;
+var chaoSprite, coinSprite = new Array(), cursorSprite;
+var statusFilled, statusUnfilled, statsBackground;
 
 // image, name, appearance, cost, mood, belly, swim, fly, run, power, stamina
 var fruit_data = [
@@ -45,7 +47,7 @@ function resources(callback) {
 	draw();
 	
 	// load our actual resources
-	var loadedImages = 0, maxImages = 31;
+	var loadedImages = 0, maxImages = 42;
 	var loadedAudio = 0, maxAudio = 1;
 	
 	cloudsBackground = loadImage("backgrounds/clouds.png");
@@ -55,8 +57,23 @@ function resources(callback) {
 	grassBackground = loadImage("backgrounds/grass.png");
 	newGarden = loadImage("backgrounds/newgarden.png");
 	continueGarden = loadImage("backgrounds/continuegarden.png");
+	saveGarden = loadImage("backgrounds/savegarden.png");
 	buttonHover = loadImage("backgrounds/hover.png");
 	SEGALogo = loadImage("sprites/sega.png");
+	chaoSprite = loadImage("sprites/walkdown1.png");
+	cursorSprite = loadImage("sprites/hand1.png");
+	statsBackground = loadImage("backgrounds/stats.png");
+	
+	statusFilled = loadImage("sprites/statusfilled.png");
+	statusUnfilled = loadImage("sprites/statusunfilled.png");
+	
+	coinSprite.push(loadImage("sprites/coin/coin1.png"));
+	coinSprite.push(loadImage("sprites/coin/coin2.png"));
+	coinSprite.push(loadImage("sprites/coin/coin3.png"));
+	coinSprite.push(loadImage("sprites/coin/coin4.png"));
+	coinSprite.push(loadImage("sprites/coin/coin5.png"));
+	coinSprite.push(loadImage("sprites/coin/coin6.png"));
+	
 	//audioNormalGarden = loadAudio("audio/garden.mp3");
 	audioSEGA = loadAudio("audio/sega.mp3");
 	
