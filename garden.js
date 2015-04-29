@@ -2,7 +2,7 @@ function garden() {
 var coins = 999999;
 var coin_frame = 0;
 
-var paused = false;
+var paused = false, shopping = false;
 
 var mousePos = { x: 0, y: 0 };
 
@@ -50,7 +50,15 @@ for (i = 0; i <= 5; i++) {
 	});
 }
 
-canvas.onclick = function() { 
+canvas.onclick = function() {
+	if (paused) { 
+		// handle pause options
+		return; 
+	}
+	if (selected && mousePos.x >= canvas.width - statsBackground.width && mousePos.y <= 40) {
+		selected.name = window.prompt("Enter Chao name:","Omochao") || selected.name;
+		return;
+	}
 	for (i = 0; i < chaos.length; i++) {
 		if (mousePos.x >= chaos[i].x && mousePos.x <= chaos[i].x + chaoSprite.width && 
 			mousePos.y >= chaos[i].y && mousePos.y <= chaos[i].y + chaoSprite.height) {
@@ -69,6 +77,10 @@ canvas.onmousemove = function(evt) { mousePos = getMousePos(evt); };
 canvas.onkeydown = function(evt) {
 	if (evt.keyCode == KEY.P) {
 		paused = !paused;
+	}
+	if (paused) return;
+	if (evt.keyCode == KEY.S) {
+		shopping = !shopping;
 	}
 };
 
@@ -114,25 +126,9 @@ function draw() {
 	
 	ctx.drawImage(grassBackground, 0, 0);
 	
-	for (i = 0; i < 7; i++) {
-		ctx.drawImage(fruit_data[i][0], 0, i * 20);
-	}
-	
-	for (i = 0; i < 12; i++) {
-		ctx.drawImage(egg_data[i][0], 20, i * 20);
-	}
-	
-	for (i = 0; i < 3; i++) {
-		ctx.drawImage(toy_data[i][0], 40, i * 20);
-	}
-	
 	for (i = 0; i < chaos.length; i++) {
 		ctx.drawImage(chaoSprite, chaos[i].x, chaos[i].y);
 	}
-	
-	ctx.drawImage(coinSprite[Math.floor(coin_frame)], 50, 50);
-	coin_frame += 0.2;
-	if (coin_frame >= coinSprite.length) coin_frame = 0;
 	
 	if (selected) {
 		ctx.drawImage(statsBackground, canvas.width - statsBackground.width, 0);
@@ -140,11 +136,12 @@ function draw() {
 		var sxb = sx - (10 * statusFilled.width) / 2;
 		
 		ctx.textAlign = "center"; 
-		ctx.font = "30px serif";
+		ctx.font = "30px Verdana";
+		ctx.fillStyle = "rgb(0, 77, 127)";
 		ctx.fillText(selected.name, sx, 34);
 		
 		ctx.textAlign = "left"; 
-		ctx.font = "20px serif";
+		ctx.font = "20px Verdana";
 		ctx.fillText("Mood", sxb, 60);
 		drawStatus(selected.mood, 10, sxb, 70);
 		ctx.fillText("Belly", sxb, 100);
@@ -159,6 +156,33 @@ function draw() {
 		drawStatus(selected.power, 10, sxb, 270);
 		ctx.fillText("Stamina", sxb, 300);
 		drawStatus(selected.stamina, 10, sxb, 310);
+	}
+	
+	if (shopping) {
+		for (i = 0; i < 7; i++) {
+			ctx.drawImage(fruit_data[i][0], 0, i * 20);
+		}
+		
+		for (i = 0; i < 12; i++) {
+			ctx.drawImage(egg_data[i][0], 20, i * 20);
+		}
+		
+		for (i = 0; i < 3; i++) {
+			ctx.drawImage(toy_data[i][0], 40, i * 20);
+		}
+		
+		ctx.drawImage(coinSprite[Math.floor(coin_frame)], 250, 50);
+		coin_frame += 0.2;
+		if (coin_frame >= coinSprite.length) coin_frame = 0;
+		
+		ctx.beginPath();
+		ctx.font = "20px Verdana";
+		ctx.fillStyle = "white";
+		ctx.strokeStyle = "black";
+		ctx.lineWidth = 1;
+		ctx.fillText(coins.toString(), 250 + coinSprite[0].width + 3, 50);
+		ctx.strokeText(coins.toString(), 250 + coinSprite[0].width + 3, 50);
+		ctx.closePath();
 	}
 	
 	if (paused) {
